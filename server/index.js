@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import Cards from './model/model.js'
 
 const app = express()
 
@@ -15,16 +16,31 @@ mongoose.connect(connections, {
     useCreateIndex: true,
     useUnifiedTopology: true
 })
-.then(res =>{
+.then((res) =>{
     console.log("DB connect successfully")
 })
-.catch(err){
-    onsole.log("DB connect unsuccessfully")
-}
+.catch(err =>console.log("DB connect unsuccessfully") )
 
 //end point API
 app.get('/', (req, res) =>{
     res.send("Hello world")
+})
+
+app.post("/tinder/cards", (req, res) =>{
+    const cardData = req.body
+   try{
+       Cards.create(cardData, (err, data) =>{
+           if(err){
+            res.status(500).json({message: err.message})
+           }
+           else{
+             res.status(500).json(cardData)
+           }
+       })
+   }
+   catch(err){
+       res.status(500).json({message: err.message})
+   }
 })
 
 app.listen(5000, () => {
