@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 //mongoose connections
-const connections = 'mongodb+srv://sks007:sks007..@cluster0.abbdz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const connections = 'mongodb+srv://sks007:sKs007...@freecluster.abbdz.mongodb.net/centralDB?retryWrites=true&w=majority'
 mongoose.connect(connections, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -26,6 +26,25 @@ app.get('/', (req, res) =>{
     res.send("Hello world")
 })
 
+//get data from db
+app.get("/tinder/cards", (req, res) =>{
+    try{
+        Cards.find({}, (err, data) =>{
+            if(!err){
+                res.status(200).json(data)
+            }
+            else{
+                res.status(500).json({ message: err.message })
+            }
+        })
+    }
+    catch(err){
+        res.status(500).json({ message: err.message })
+    }
+})
+
+
+// post data into db
 app.post("/tinder/cards", (req, res) =>{
     const cardData = req.body
    try{
@@ -34,7 +53,7 @@ app.post("/tinder/cards", (req, res) =>{
             res.status(500).json({message: err.message})
            }
            else{
-             res.status(500).json(cardData)
+             res.status(500).json(data)
            }
        })
    }
