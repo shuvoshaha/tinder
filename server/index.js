@@ -3,6 +3,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import Cards from './model/model.js'
 
+// app config
 const app = express()
 
 // middleware 
@@ -16,52 +17,52 @@ mongoose.connect(connections, {
     useCreateIndex: true,
     useUnifiedTopology: true
 })
-.then((res) =>{
-    console.log("DB connect successfully")
-})
-.catch(err =>console.log("DB connect unsuccessfully") )
+    .then((res) => {
+        console.log("DB connect successfully")
+    })
+    .catch(err => console.log("DB connect unsuccessfully"))
 
 //end point API
-app.get('/', (req, res) =>{
+app.get('/', (req, res) => {
     res.send("Hello world")
 })
 
-//get data from db
-app.get("/tinder/cards", (req, res) =>{
-    try{
-        Cards.find({}, (err, data) =>{
-            if(!err){
+//get all data from db
+app.get("/tinder/cards", (req, res) => {
+    try {
+        Cards.find({}, (err, data) => {
+            if (!err) {
                 res.status(200).json(data)
             }
-            else{
+            else {
                 res.status(500).json({ message: err.message })
             }
         })
     }
-    catch(err){
+    catch (err) {
         res.status(500).json({ message: err.message })
     }
 })
 
-
 // post data into db
-app.post("/tinder/cards", (req, res) =>{
+app.post("/tinder/cards", (req, res) => {
     const cardData = req.body
-   try{
-       Cards.create(cardData, (err, data) =>{
-           if(err){
-            res.status(500).json({message: err.message})
-           }
-           else{
-             res.status(500).json(data)
-           }
-       })
-   }
-   catch(err){
-       res.status(500).json({message: err.message})
-   }
+    try {
+        Cards.create(cardData, (err, data) => {
+            if (err) {
+                res.status(500).json({ message: err.message })
+            }
+            else {
+                res.status(201).json(data)
+            }
+        })
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message })
+    }
 })
 
+// listen
 app.listen(5000, () => {
     console.log("Server is running...")
 })
