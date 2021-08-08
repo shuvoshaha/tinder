@@ -11,8 +11,8 @@ const SwipeButton = () => {
     return (
         <div className="swipe_button_container">
             <div className="swipe_buttons">
-            <IconButton className="swipeButtons_repeat">
-                <ReplayIcon fontSize="large" />
+            <IconButton >
+                <ReplayIcon fontSize="large" className="swipeButtons_repeat"/>
             </IconButton>
             <IconButton className="swipeButtons_left">
                 <CloseIcon fontSize="large" />
