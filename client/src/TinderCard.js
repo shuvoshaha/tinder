@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import TinderCards from 'react-tinder-card'
 import "./TinderCard.css"
+import axios from './axios'
 
 const TinderCard = () => {
     const  [person, setPerson] = useState([])
 
+    // get person data using API
     useEffect(() =>{
-        const fetData = async () =>{
-            
+        const fetchData = async () =>{
+            await axios.get('/tinder/cards')
+            .then(res => setPerson(res.data))
+            .catch(err => { console.log(err) })
         }
-    })
+        fetchData()
+    }, [setPerson])
+
+    console.clear()
 
     const onSwipe = (direction, nameToDelete) =>{
         console.log("removing" + nameToDelete)

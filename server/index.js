@@ -45,17 +45,22 @@ app.get("/tinder/cards", (req, res) => {
 })
 
 // post data into db
-app.post("/tinder/cards", (req, res) => {
+app.post("/tinder/cards", async (req, res) => {
     const cardData = req.body
     try {
-        Cards.create(cardData, (err, data) => {
-            if (err) {
-                res.status(500).json({ message: err.message })
-            }
-            else {
-                res.status(201).json(data)
-            }
-        })
+
+        const card = new Cards(cardData)
+
+        await card.save()
+        res.status(201).json(card)
+        // Cards.create(cardData, (err, data) => {
+        //     if (err) {
+        //         res.status(500).json({ message: err.message })
+        //     }
+        //     else {
+        //         res.status(201).json(data)
+        //     }
+        // })
     }
     catch (err) {
         res.status(500).json({ message: err.message })
