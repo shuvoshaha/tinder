@@ -1,0 +1,19 @@
+.swipe_button_container{
+    display: flex;
+    justify-content: center;
+}
+
+.swipe_buttons{
+    position: fixed;
+    bottom: 10vh;
+    display: flex;
+    justify-content: space-evenly;
+    width: 600px;
+    margin: auto;
+}
+
+.swipe_buttons .MuiButtonBase-root{
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 18px 53px rgba(0,0,0,0.3);
+}
